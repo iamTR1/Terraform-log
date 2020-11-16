@@ -2,12 +2,14 @@
 # Create a web server
 # Resource https://www.vultr.com/api/
 resource "vultr_server" "this_server" {
-    plan_id = "203"
+    count = 3
+    # Minimum 2GB RAM
+    plan_id = "202"
     region_id = "25"
     os_id = "240"
-    label = "this_server_label"
-    tag = "this_server_tag"
-    hostname = "this_server_hostname"
+    label = "this_server_label_${count.index +1}"
+    tag = "this_server_tag_${count.index +1}"
+    hostname = "this_server_hostname_${count.index +1}"
     user_data = "{'foo': true}"
     enable_ipv6 = true
     auto_backup = true
@@ -16,7 +18,7 @@ resource "vultr_server" "this_server" {
 }
 
 output "this_public_ip" {
-    value = vultr_server.this_server.main_ip
+    value = vultr_server.this_server.*.main_ip
 }
 
 output "user_name" {
@@ -24,5 +26,5 @@ output "user_name" {
 }
 
 output "this_password" {
-    value = vultr_server.this_server.default_password
+    value = vultr_server.this_server.*.default_password
 }
