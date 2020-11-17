@@ -10,7 +10,7 @@ resource "vultr_ssh_key" "this_ssh_key" {
 resource "vultr_server" "this_server" {
     # number of server
     count = 3
-    plan_id = "201"
+    plan_id = "203"
     region_id = "40"
     os_id = "387"
     label = "this_server_label_${count.index +1}"
@@ -19,10 +19,7 @@ resource "vultr_server" "this_server" {
     user_data = "{'foo': true}"
     enable_ipv6 = true
     auto_backup = true
-    # ddos_protection = true
     notify_activate = false
-
-    # sh_key_ids = [vultr_ssh_key.this_ssh_key.id]
 }
 
 output "this_public_ip" {
